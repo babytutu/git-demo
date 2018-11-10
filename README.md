@@ -143,7 +143,7 @@ ssh -T git@github.com
 
 - ```
   feat: <subject>
-  
+
   # ## 提交信息说明 ##
   #
   # Commit message格式【精简版本】
@@ -415,7 +415,7 @@ conventional-changelog -p angular -i CHANGELOG.md -s
  },
 ```
 
-### 5.3生成文件
+### 5.3 生成文件
 
 ```bash
 npm run changelog
