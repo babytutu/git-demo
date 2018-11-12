@@ -48,10 +48,9 @@ ssh-add ~/.ssh/id_rsa
 
 ![img](windows/2.2ssh-add.png)
 
-
 ###  2.3 将ssh-key关联到GitHub/GitLab
 
-> 复制已有的`ssh-key`，添加到`gitlab`账户设置的`ssh-key`配置项中
+复制已有的`ssh-key`
 
 ```bash
 cat ~/.ssh/id_rsa.pub
@@ -59,6 +58,9 @@ cat ~/.ssh/id_rsa.pub
 
 ![img](windows/2.3ssh-key-copy.png)
 
+添加到gitlab Profile Setting ssh-keys ADD SSH KEY
+
+![img](windows/2.3add-ssh-keys.png)
 
 ### 2.4 验证ssh-key关联状态
 
@@ -314,19 +316,11 @@ bug修复完毕后，在hotfix分支点击Git工作流后，出现如下提示
 
 ![img](windows/4.4.3cherry-pick-ok.png)
 
-
-### 4.5 其他
-
-#### 4.5.1 搜索
+### 4.5 搜索
 
 > 多维度搜素代码
 
 ![img](windows/4.5search.png)
-
-
-#### 4.5.2 未暂存文件
-
-> 可以直接回滚（丢弃文件）和删除（移除文件）
 
 
 
@@ -353,7 +347,6 @@ conventional-changelog -p angular -i CHANGELOG.md -s
 ```bash
 npm run changelog
 ```
-
 
 
 ## 参考资料
