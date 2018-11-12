@@ -75,50 +75,8 @@ ssh -T git@github.com
 
 ![3install-sourcetree](images/3install-sourcetree.png)
 
-跳过登录账号[仅适用于Windows]
-
->软件安装过程中的注册账号步骤可能因网络原因失败
-
-打开`我的电脑`，在最上方的地址栏直接输入以下地址
-
-```
-%LocalAppData%\Atlassian\SourceTree\
-```
-
-在这个目录下新建一个名为 `accounts.json` 的文件
-
-```json
-[
-  {
-    "$id": "1",
-    "$type": "SourceTree.Api.Host.Identity.Model.IdentityAccount, SourceTree.Api.Host.Identity",
-    "Authenticate": true,
-    "HostInstance": {
-      "$id": "2",
-      "$type": "SourceTree.Host.Atlassianaccount.AtlassianAccountInstance, SourceTree.Host.AtlassianAccount",
-      "Host": {
-        "$id": "3",
-        "$type": "SourceTree.Host.Atlassianaccount.AtlassianAccountHost, SourceTree.Host.AtlassianAccount",
-        "Id": "atlassian account"
-      },
-      "BaseUrl": "https://id.atlassian.com/"
-    },
-    "Credentials": {
-      "$id": "4",
-      "$type": "SourceTree.Model.BasicAuthCredentials, SourceTree.Api.Account",
-      "Username": "",
-      "Email": null
-    },
-    "IsDefault": false
-  }
-]
-```
-
-再次双击安装，会发现跳过了登录账号的界面并直接进入了主界面，就可以正常使用了
-
+安装完成
 ![3install-end](images/3install-end.png)
-
-
 
 ## 4 Sourcetree简明使用指南
 
@@ -130,7 +88,6 @@ ssh -T git@github.com
 - 选择项目目录，语言等
 
 ![4.1.1setting](images/4.1.1setting.png)
-
 
 
 #### 4.1.2 消息模版
@@ -379,21 +336,11 @@ bug修复完毕后，在hotfix分支点击Git工作流后，出现如下提示
 
 
 
-### 4.5 其他
-
-#### 4.5.1 搜索
+### 4.5 搜索
 
 > 多维度搜素代码
 
 ![4.5search](images/4.5search.png)
-
-
-
-#### 4.5.2 未暂存文件
-
-> 可以直接回滚（丢弃文件）和删除（移除文件）
-
-![4.5others](images/4.5others.png)
 
 
 

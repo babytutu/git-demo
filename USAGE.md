@@ -96,7 +96,7 @@ ssh -T git@github.com
 
 ![img](windows/3install-sourcetree-step4.png)
 
-- 点击下一步，会出现个加载SSH密钥的提示框，选择否
+- 点击下一步，会出现个加载SSH密钥的提示框，选择***否***
 
 ![img](windows/3install-sourcetree-step5.png)
 
