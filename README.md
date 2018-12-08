@@ -1,12 +1,12 @@
 # Git软件安装使用教程
 
+> for mac -> see USAGE.md
+
 ## 1 安装Git
 
-> 一切从这里开始 [官方下载地址](https://git-scm.com/downloads)
+一切从这里开始 [官方下载地址](https://git-scm.com/downloads)
 
-![1install-git](images/1install-git.png)
-
-
+![img](images/win/1install-git.png)
 
 ## 2 配置 ssh-key
 
@@ -23,15 +23,14 @@ cd ~/.ssh
 ls
 ```
 
-如图所示，已有ssh-key
+如图所示，没有ssh-key
 
-![2.1check-ssh-key](images/2.1check-ssh-key.png)
-
+![img](images/win/2.1ssh-key-check.png)
 
 
 ### 2.2 生成新的ssh-key
 
-> 没有`ssh-key`
+> 已有`ssh-key`的跳过这一步
 
 ```bash
 ssh-keygen
@@ -39,23 +38,31 @@ ssh-keygen
 
 首先 `ssh-keygen` 会确认密钥的存储位置（默认是 `.ssh/id_rsa`），然后它会要求你输入两次密钥口令。如果你不想在使用密钥时输入口令，将其留空即可。
 
-![2.2creat-new-ssh-key](images/2.2creat-new-ssh-key.png)
+![img](images/win/2.2ssh-keygen.png)
 
+执行`ssh-add`
 
+```bash
+eval $(ssh-agent)
+
+ssh-add ~/.ssh/id_rsa
+```
+
+![img](images/win/2.2ssh-add.png)
 
 ###  2.3 将ssh-key关联到GitHub/GitLab
 
-> 复制已有的`ssh-key`，添加到账户设置的`ssh-key`配置项中
+复制已有的`ssh-key`
 
 ```bash
 cat ~/.ssh/id_rsa.pub
 ```
 
-公钥看起来是这样的
+![img](images/win/2.3ssh-key-copy.png)
 
-![2.3add-ssh-key](images/2.3add-ssh-key.png)
+添加到gitlab Profile Setting ssh-keys ADD SSH KEY
 
-
+![img](images/win/2.3add-ssh-keys.png)
 
 ### 2.4 验证ssh-key关联状态
 
@@ -65,7 +72,7 @@ cat ~/.ssh/id_rsa.pub
 ssh -T git@github.com
 ```
 
-![2.4test-ssh-key](images/2.4test-ssh-key.png)
+![img](images/win/2.4ssh-key-test.png)
 
 
 
@@ -73,10 +80,31 @@ ssh -T git@github.com
 
 > 免费的Git客户端  [官方下载地址](https://www.sourcetreeapp.com)
 
-![3install-sourcetree](images/3install-sourcetree.png)
+- 非常高兴的宣布，sourcetree升级到v3了，然后注册账号的问题已经解决了，尴尬的是还是需要注册，那就注册吧，选择右边那个
 
-安装完成
-![3install-end](images/3install-end.png)
+![img](images/win/3install-sourcetree-step1.png)
+
+- 在网页中完成注册，过程有点慢
+
+![img](images/win/3install-sourcetree-step2.png)
+
+- 进入一个简单的功能选择界面，如果之前没有安装`Git`，这个界面会自动下载安装
+- 不要勾选`Mercurial`，它是Git的兄弟，咱们不用
+- 打开高级选项，都勾上，一个是自动格式化换行符，一个是开启全局忽略文件的设置
+
+![img](images/win/3install-sourcetree-step3.png)
+
+- 总算装完了，简单配置下信息，顺便把讨厌的信息收集关闭
+
+![img](images/win/3install-sourcetree-step4.png)
+
+- 点击下一步，会出现个加载SSH密钥的提示框，选择***否***
+
+![img](images/win/3install-sourcetree-step5.png)
+
+- 看到这个界面，说明安装顺利完成
+
+![img](images/win/3install-sourcetree-end.png)
 
 ## 4 Sourcetree简明使用指南
 
@@ -84,178 +112,130 @@ ssh -T git@github.com
 
 #### 4.1.1 账户信息
 
-- 填写默认用户信息，commit记录中会显示
-- 选择项目目录，语言等
+先别急着加仓库，还是要简单设置下的，`工具-设置`
 
-![4.1.1setting](images/4.1.1setting.png)
+![img](images/win/4.1.1start-setting.png)
 
+主要关注以下几点
 
-#### 4.1.2 消息模版
+- 默认用户信息，安装过程中已经输过了
+- SSH客户端配置，选择`OpenSSH`，会自动加载SSH密钥
+- Repo Settings，项目目录选好，以后远程仓库克隆下来就到这个文件夹下了，我只能说这个软件翻译做了一半，如果中文看不下去了，可以在这边切换语言，记得重启后才生效
 
-- 固定格式：`<type>: <subject>`
-
-- 固定类型：`type`按照提交目的归类，`type`为`feat`和`fix`，则该 commit 将出现在 Change log 之中
-
-- 消息模版：设置`提交消息模版`模版如下，`#`部分为使用说明，提交时不会带入
-
-- ```
-  feat: <subject>
-
-  # ## 提交信息说明 ##
-  #
-  # Commit message格式【精简版本】
-  #
-  # <type>: <subject>
-  #
-  # 为方便使用，已默认type为feat，直接填写subject即可
-  #
-  # type是commit的类别，只允许使用下面7个标识
-  #
-  #   feat: 开发任务，请复制禅道任务编号加标题
-  #   fix: 修复bug，请复制禅道bug编号加标题
-  #   docs: 文档，如增加修改代码注释等
-  #   style: 代码格式改变
-  #   refactor: 重构（即不是新增功能，也不是修改bug的代码变动）
-  #   test: 增加测试
-  #   chore：构建过程或辅助工具的变动
-  #
-  # subject是commit目的的简短描述，不超过50个字符
-  #
-  ```
-
-- 设置模版：`偏好设置-提交`，可直接输入或将消息模版代码保存为文本文件后`导入`
-
-  ![4.1.2git-message-template](images/4.1.2git-message-template.png)
-
-- 提交代码：替换`<subject>`，抽取changelog的工具要求冒号后必须有空格
-
-  ![4.1.2git-commit-message](images/4.1.2git-commit-message.png)
-
-
-
-#### 4.1.3 功能区域
-
-![4.1.3view](images/4.1.3view.png)
-
+![img](images/win/4.1.1setting.png)
 
 
 ### 4.2 新建/克隆仓库
 
 Sourcetree提供若干添加仓库的方式
 
-![4.2new-git](images/4.2new-git.png)
-
-#### 4.2.1 扫描文件夹
-
-从小乌龟等其他git管理工具快速迁移到`Sourcetree`的大招
-
-![4.2.1scan-local](images/4.2.1scan-local.png)
+![img](images/win/4.2add-git.png)
 
 
-
-#### 4.2.2 从URL克隆
+#### 4.2.1 Clone
 
 > 已配置并成功测试`ssh-key`后，请复制`ssh`开头的远程仓库地址
 
 最常见的方式，从gitlab中拷贝地址，可以通过`高级选项-检出分支`来选择分支，git仓库缺省分支一般是master，而开发使用feature或者develop
 
-![4.2.2new-git-url](images/4.2.2new-git-url.png)
+![img](images/win/4.2.1clone-git.png)
 
-添加成功后，列表中会显示仓库名称
+添加成功后，自动进入仓库
 
-![4.2.2new-git-url-list](images/4.2.2new-git-url-list.png)
+![img](images/win/4.2.1clone-git-ok.png)
 
-双击仓库名查看仓库详情
+打开新标签后，会发现所有仓库列表多了个仓库
 
-![4.2.2new-git-url-detail](images/4.2.2new-git-url-detail.png)
-
-
-
-#### 4.2.3 添加已经存在的本地仓库
-
-如果只想把单独的本地仓库放到Sourcetree中管理，可以使用这个操作
+![img](images/win/4.2.1clone-git-list.png)
 
 
+#### 4.2.2 Add
 
-#### 4.2.4 创建本地仓库
+添加已经存在的本地仓库
 
-把本地文件夹变成一个本地仓库，可以通过关联远程仓库把本地仓库内容推送到远程仓库
+![img](images/win/4.2.2add-local-git.png)
 
-![4.2.4new-git-local-link-remote](images/4.2.4new-git-local-link-remote.png)
+
+#### 4.2.3 Create
+
+创建本地仓库，把本地文件夹变成一个本地仓库，可以通过关联远程仓库把本地仓库内容推送到远程仓库
+
+![img](images/win/4.2.3create-local-git.png)
 
 
 
 ### 4.3 分支管理【Git-flow】
 
 | 分支命名规则 | 功能         | 备注                        |
-| ------------ | ------------ | --------------------------- |
+| ------------ | ------------ |--------------------------- |
 | feature      | 功能分支     | 功能开发，每次从develop新建 |
 | develop      | 开发分支     | 功能开发完毕后合并到此分支  |
 | release      | 发布分支     | 从develop新建，发布tag      |
 | hotfix       | 补丁分支     | 修复紧急bug                 |
 | master       | 生产环境分支 | 用于记录发布版本            |
 
+
 #### 4.3.1 初始化
 
 > 新仓库先执行`Git工作流`，为分支设置前缀
 
-![4.3.1git-flow](images/4.3.1git-flow.png)
+![img](images/win/git-flow/4.3.1git-flow-reset.png)
 
 Git flow的几个基本操作
 
-![4.3.1git-flow-detail](images/4.3.1git-flow-detail.png)
-
+![img](images/win/git-flow/4.3.1git-flow-detail.png)
 
 
 #### 4.3.2 建立新的功能
 
-![4.3.2git-flow-feature](images/4.3.2git-flow-feature.png)
+![img](images/win/git-flow/4.3.2git-flow-feature.png)
 
 功能开发完毕后，在feature分支点击Git工作流后，出现如下提示
 
-![4.3.2git-flow-feature-end](images/4.3.2git-flow-feature-end.png)
+![img](images/win/git-flow/4.3.2git-flow-feature-end.png)
 
 点击完成当前项目，出现提示，默认会在完成功能后删除`feature`分支，会自动进行分支合并
 
-![4.3.2git-flow-feature-check](images/4.3.2git-flow-feature-check.png)
+![img](images/win/git-flow/4.3.2git-flow-feature-check.png)
 
 #### 4.3.3 建立新的发布版本
 
 > 默认从develop分支新建
 
-![4.3.3git-flow-release](images/4.3.3git-flow-release.png)
+![img](images/win/git-flow/4.3.3git-flow-release.png)
 
 在release分支点击Git工作流后，出现如下提示
 
-![4.3.3git-flow-release-end](images/4.3.3git-flow-release-end.png)
+![img](images/win/git-flow/4.3.3git-flow-release-end.png)
 
 点击完成当前项目，会出现如下信息，需要给发布的版本打`tag`同时默认删除`release`分支
 
-![4.3.3git-flow-release-check](images/4.3.3git-flow-release-check.png)
+![img](images/win/git-flow/4.3.3git-flow-release-check.png)
 
 然后Git工作流会在master上打`tag`，并重新回到develop分支
-
-![4.3.1git-flow-end](images/4.3.1git-flow-end.png)
-
 
 
 #### 4.3.4 建立新的修复补丁
 
 > 人无完人，bug永无止境，很可能刚发布一个`tag`，就忽然发现一个重大问题需要紧急修复
 
-![4.3.4git-flow-hotfix](images/4.3.4git-flow-hotfix.png)
+![img](images/win/git-flow/4.3.4git-flow-hotfix.png)
 
 bug修复完毕后，在hotfix分支点击Git工作流后，出现如下提示
 
-![4.3.4git-flow-hotfix-end](images/4.3.4git-flow-hotfix-end.png)
+![img](images/win/git-flow/4.3.4git-flow-hotfix-end.png)
 
 点击完成当前项目，会出现如下信息，需要给发布的补丁打`tag`同时默认删除`hotfix`分支
 
-![4.3.4git-flow-hotfix-check](images/4.3.4git-flow-hotfix-check.png)
+![img](images/win/git-flow/4.3.4git-flow-hotfix-check.png)
+
+最后仓库的状态
+
+![img](images/win/git-flow/4.3.4git-flow-all.png)
 
 标准模式的Git flow会自动进行分支的新建删除，整个过程如下
 
-![4.3.1git-flow-all](images/4.3.1git-flow-all.png)
+![img](images/win/git-flow/4.3git-flow-all.png)
 
 
 
@@ -267,14 +247,9 @@ bug修复完毕后，在hotfix分支点击Git工作流后，出现如下提示
 
 #### 4.4.1 提交代码
 
-可以选择提交部分代码，将需要提交的代码加入`已暂存文件`，填写`提交信息`，点击提交即可
+将需要提交的代码加入`已暂存文件`，填写`提交信息`，点击提交即可
 
-![4.4.1commit-code](images/4.4.1commit-code.png)
-
-确认下，刚才的代码已经提交
-
-![4.4.1commit-code-ok](images/4.4.1commit-code-ok.png)
-
+![img](images/win/4.4.1commit-code.png)
 
 
 #### 4.4.2 贮藏代码
@@ -283,64 +258,33 @@ bug修复完毕后，在hotfix分支点击Git工作流后，出现如下提示
 
 可能会多次使用此功能，建议为每次操作都填写信息用于区分，可以勾选保留缓存的变更，那本地代码不会有变动，贮藏区域会把当前的变更保存，此选项默认是不勾选的
 
-![4.4.2stash](images/4.4.2stash.png)
+![img](images/win/4.4.2stash.png)
 
 点击贮藏后，就恢复到了上一次提交，且`已贮藏`会显示保存的内容
 
 > 特别说明：未加入版本管理的文件不会被贮藏
 
-![4.4.2stash-list](images/4.4.2stash-list.png)
 
 在`已贮藏`列表中选中需要应用的信息，右键，可以应用贮藏，会出弹窗确认此操作
 
-![4.4.2stash-apply](images/4.4.2stash-apply.png)
+![img](images/win/4.4.2stash-apply.png)
 
-
-
-![4.4.2stash-apply-check](images/4.4.2stash-apply-check.png)
 
 #### 4.4.3 遴选 cherry-pick
 
-> 字面意思，就是我只要合部分代码
+- 把需要的功能选中，然后`遴选`
 
-- 举个例子：开发过程中，`feature`分支提交了2个功能，如下图
-
-![4.4.3cherry-pick](images/4.4.3cherry-pick.png)
-
-- 老板发话了，先把第一个新功能给客户，赶紧开个`hotfix`
-
-![4.4.3cherry-pick-start](images/4.4.3cherry-pick-start.png)
-
-
-- 现在把第一个功能选中，然后`遴选`
-
-![4.4.3cherry-pick-detail](images/4.4.3cherry-pick-detail.png)
-
-
-- 又要来和你确认了，真的要合么？我合了哟？
-
-![4.4.3cherry-pick-check](images/4.4.3cherry-pick-check.png)
-
+![img](images/win/4.4.3cherry-pick.png)
 
 - 顺利合上去了
 
-![4.4.3cherry-pick-check-end](images/4.4.3cherry-pick-check-end.png)
-
-- 核对文件后，Git工作流走起来，客户就可以拿着patch2走了
-
-![4.4.3cherry-pick-check-ok](images/4.4.3cherry-pick-check-ok.png)
-
-- 接下去开发继续回到`feature`开发，全部开发完成后打tag，如下图
-
-![4.4.3cherry-pick-check-all](images/4.4.3cherry-pick-check-all.png)
-
-
+![img](images/win/4.4.3cherry-pick-ok.png)
 
 ### 4.5 搜索
 
 > 多维度搜素代码
 
-![4.5search](images/4.5search.png)
+![img](images/win/4.5search.png)
 
 
 
@@ -367,7 +311,6 @@ conventional-changelog -p angular -i CHANGELOG.md -s
 ```bash
 npm run changelog
 ```
-
 
 
 ## 参考资料
